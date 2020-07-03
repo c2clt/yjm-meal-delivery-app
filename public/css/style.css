@@ -242,6 +242,14 @@ body {
     margin: 0.5rem auto;
 }
 
+/*styling errors in forms*/
+
+.errors {
+    font-size: small;
+    color: red;
+    margin-bottom: 1rem;
+}
+
 /*footer*/
 .footer {
     padding-top: 1rem;

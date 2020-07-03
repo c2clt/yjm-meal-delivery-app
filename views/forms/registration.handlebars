@@ -1,5 +1,5 @@
 <div id="registration">
-    <form action="/registration" method="POST" class="form-signup">
+    <form action="/forms/registration" method="POST" class="form-signup">
             <div class="social-login">
                 <button class="btn facebook-btn social-btn" type="button"><span><i class="fab fa-facebook-f"></i> Sign up with Facebook</span> </button>
             </div>
@@ -10,17 +10,34 @@
             <p style="text-align:center">OR</p>
 
             <input type="text" id="firstName" name="firstName" class="form-control" placeholder="First name" autofocus="">
+            <div class="errors firstName">
+                {{errorFirst}}
+            </div>
             <input type="text" id="lastName" name="lastName" class="form-control" placeholder="Last name" autofocus="">
-            <input type="tel" id="phoneNumber" name="phoneNumber" class="form-control" placeholder="Phone Number" autofocus="">
-            <input type="email" id="userEmail" name="email" class="form-control" placeholder="Email address" autofocus="">
-            <input type="password" id="user-pass" name="password" class="form-control" placeholder="Password" autofocus="">
-            <input type="password" id="user-repeatpass" name="repeatpsd" class="form-control" placeholder="Repeat Password" autofocus="">
-
+            <div class="errors lastName">
+                {{errorLast}}
+            </div>
+            <input type="tel" id="phoneNumber" name="phoneNumber" class="form-control" placeholder="Phone number">
+            <div class="errors phone">
+                {{errorPhone}}
+            </div>
+            <input type="email" id="userEmail" name="email" class="form-control" placeholder="Email address">
+            <div class="errors email">
+                {{errorEmail}}
+            </div>
+            <input type="password" id="user-pass" name="password" class="form-control" placeholder="Password">
+            <div class="errors password">
+                {{errorPsd}}
+            </div>
+            <input type="password" id="user-repeatpass" name="repeatpsd" class="form-control" placeholder="Repeat Password">
+            <div class="errors repeatPsd">
+                {{errorRepeat}}
+            </div>
             <input class="btn btn-primary btn-block" type="submit" value="Sign Up">
             <hr>
 
             <div>
-                <a id="goLogin" href="/login">Already have an account? Go to login</a>
+                <a id="goLogin" href="/forms/login">Already have an account? Go to login</a>
             </div>
         </form>
 </div>
