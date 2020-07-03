@@ -12,23 +12,11 @@ router.get("/", (req, res)=>{
     });
 });
 
-// login route
-router.get("/login", (req, res)=>{
-    res.render("general/login", {
-        title: "Login Page"
+// dashboard route
+router.get("/dashboard", (req, res)=>{
+    res.render("general/dashboard", {
+        title: "Welcome Page"
     });
-});
-
-// registration route
-router.get("/registration", (req, res)=>{
-    res.render("general/registration", {
-        title: "Registration Page"
-    });
-});
-
-// process registration form when user submits form
-router.post("/registration", (reg, res)=>{
-
 });
 
 module.exports = router;
