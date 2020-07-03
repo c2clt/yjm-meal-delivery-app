@@ -1,0 +1,19 @@
+<div class="feature">
+    <h3>Quickly, Healthy and Nutritious at YJM Meal Delivery</h3>
+    <img src="/img/feature.jpg" alt="Delivery Feature">
+</div>
+
+
+<div class="container-fluid p-0 text-center home-top">
+    <h3>Order Our Top Meals At Any Time</h3>
+    <div class="row">
+    {{#each topPackages}}
+        <div class="col-sm-6 col-md-3 my-col">
+            <p><img src="/img/{{this.image}}" alt="Top"></p>
+            <p class="name">{{this.title}} </p>
+            <p>{{this.content}}</p>
+            <p>${{this.price}} </p>
+        </div>        
+    {{/each}}
+    </div>
+</div>

@@ -1,0 +1,334 @@
+* {   
+    box-sizing: border-box;
+}
+
+html, body {
+    font-size: 1em;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: url(../img/background.jpg) no-repeat;
+    background-size: cover;
+}
+
+.prom p {
+    width: 100%;
+    background: rgba(19, 18, 18, 0.5);
+    margin: 0;
+    text-align: center;
+    font-size: 1.0rem;
+    font-weight: bolder;
+    color: white;
+    padding: 0.5rem;
+    letter-spacing: 0.2rem;
+}
+
+.my-header {
+    margin: 0rem; 
+    background: rgba(255, 128, 128, 0.5);
+}
+
+.logo img {
+    width: 70px;
+    height: 70px;
+    border-radius: 10px;
+} 
+
+.site-title {
+    font-family: cursive;
+    font-weight: bolder;
+    font-size: 2.5rem; 
+    letter-spacing: 0.2rem;
+    color: black;
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;  
+}
+
+.mynav {
+    font-size: 1.2rem;    
+}
+
+.mynav .nav-link {
+    font-weight: bolder;
+    color: black;
+}
+
+.dropdown-menu {
+    background-color: lightblue; 
+    border: lightblue 0.1rem solid; 
+}
+
+.nav-item {
+    margin: auto 1rem;
+}
+
+.search-coin .fas, .shopping-basket .fas {
+    font-size: 2rem;
+    color: black; 
+}
+
+
+/* Banner Slider*/
+.site-slider img {
+    position: relative;
+    margin: 0 auto;
+}
+
+.site-slider {
+    position: relative;
+}
+
+.position-top {
+    position: absolute;
+    top: 35%;
+}
+
+.site-slider .slider-btn .prev,
+.site-slider .slider-btn .next {
+    padding: 1rem 1.5rem;
+    border-radius: 10rem;
+    color:black;
+    margin: 0 1em;
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+.site-slider:hover .slider-btn .prev, 
+.site-slider:hover .slider-btn .next {
+    opacity: 1;
+}
+.right-0 {
+    right: 0;
+}
+
+/* Slick dots*/
+.slick-dots {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    padding: 1rem 0;
+    list-style-type: none;
+    position: absolute;
+    bottom: 0;
+    right: 50%;
+}
+
+.slick-dots li {
+    margin: 0 0.6rem;
+}
+
+.slick-dots button {
+    display: block;
+    width: 0.5rem;
+    height: 0.5rem;
+    padding: 0;
+    border: none;
+    background-color:lightcoral;
+    text-indent: -9999px;
+    border-radius: 100%;
+}
+
+.slick-dots li.slick-active button {
+    transform: scale(2.5);
+    box-shadow: 0px 3px 5px 1px rgba(0, 0, 0, 0.205);
+}
+
+/*home page*/
+.feature {
+    width: auto;
+    background-color: blanchedalmond;
+    text-align: center;
+}
+.feature h3, .home-top h3, .meal-list h3 {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: bolder;
+    padding: 0.2rem 0;
+    margin-bottom: 0rem;
+    background: rgba(149, 233, 248, 0.7);
+}
+.feature img {
+    width: 100%;
+}
+.my-col {
+    background: rgba(236, 167, 167, 0.6);
+}
+.home-top p, .meal-list p {
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin: 0.5rem;
+}
+
+.meal-list i {
+    font-size: 1.2rem;
+    color: lightcoral;
+}
+.my-col img {
+    width: 100%;
+}
+
+/* login regitration forms */
+#login, #registration {
+    width: 40%;
+    margin:10rem auto;
+    background: rgba(149, 233, 248, 0.7);
+}
+#login form, #registration form {
+    width: 100%;
+    max-width: 410px;
+    padding: 1rem;
+    margin: auto;
+}
+#login .form-control, #registration .form-control {
+    position: relative;
+    box-sizing: border-box;
+    height: auto;
+    padding: 10px;
+    font-size: 16px;
+}
+#login .form-control:focus { z-index: 2; }
+#login .form-signin input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+#login .form-signin input[type="password"] {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+#login .social-login, #registration .social-login {
+    width:390px;
+    margin:0 auto;
+    margin-bottom: 14px;
+}
+#login .social-btn, #registration .social-btn {
+    font-weight: 100;
+    color:white;
+    width:190px;
+    font-size: 0.9rem;
+}
+#login a {
+    display: block;
+    padding-top:10px;
+    color:lightseagreen;
+}
+
+#login button[type="submit"] { margin-top:10px; }
+
+#login .facebook-btn, #registration .facebook-btn {  background-color:#3C589C; }
+
+#login .google-btn,  #registration .google-btn { background-color: #DF4B3B; }
+
+#registration .form-signup .social-btn { width:210px; }
+
+.form-signin .social-login, .form-signup .social-login {
+    width:210px !important;
+    margin: 0 auto;
+}
+
+#goLogin {
+    font-family: fantasy;
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: lightcoral;
+    text-decoration: none;
+}
+
+#login input, #registration input {
+    margin: 0.5rem auto;
+}
+
+/*footer*/
+.footer {
+    padding-top: 1rem;
+    background-color: white;
+    color: gray;
+}
+
+.footer-nav a {
+    color: gray;
+}
+.footer-meals {
+    font-size: 1.2rem;
+    font-weight: bolder;
+}
+.footer-about, .footer-help, .footer-newsletter {
+    font-size: 1.2rem;
+    font-weight: bolder;
+    margin-top: 0.45rem;
+}
+.gift-prize {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: bold;
+}
+.join-btn {
+    margin-top: 1rem;
+    border-radius: 0.2rem;
+    border: navajowhite 0.1rem solid;
+    background-color: navajowhite;
+    font-weight: bolder;
+    letter-spacing: 0.2rem;
+}
+.copyright {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: gray;
+    padding: 1rem;
+    letter-spacing: 0.2rem;
+}
+
+.social-media, .payment-methods {
+    font-size: 2rem;
+}
+
+.social-media i {
+    padding: 0.5rem;
+    color: lightcoral;
+}
+
+.payment-methods i {
+    padding: 0.5rem;
+    color: cadetblue;
+}
+
+
+@media screen and (max-width: 600px) {
+    .site-title, .search-bar, .shopping-basket {
+        display: none;
+    }
+
+    #login, #registration {
+        width: 300px;
+    }
+    
+    #login .social-login, #registration .social-login {
+        width: 200px;
+        margin: 0 auto;
+        margin-bottom: 10px;
+    }
+    #login .social-btn, #registration  .social-btn{
+        font-size: 1.3rem;
+        font-weight: 100;
+        color:white;
+        width: 200px;
+        height: 56px;
+        
+    }
+    #login .social-btn:nth-child(1), #registration .social-btn:nth-child(1){
+        margin-bottom: 5px;
+    }
+    #login .social-btn span, #registration .social-btn span {
+        display: none;
+    }
+    #login .facebook-btn:after, #registration .facebook-btn:after {
+        content:'Facebook';
+    }
+  
+    #login .google-btn:after, #registration .google-btn:after{
+        content:'Google+';
+    }
+}

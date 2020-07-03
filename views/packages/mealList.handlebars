@@ -1,0 +1,19 @@
+<div class="container-fluid p-0 text-center meal-list">
+    <h3>Healthy and Nutritious Foods for Your Choice</h3>
+    <div class="row">
+    {{#each packages}}
+        <div class="col-sm-6 col-md-3 my-col">
+            <p><img src="/img/{{this.image}}" alt="Meal Package"></p>
+            <p class="name">{{this.title}} </p>
+            <p>Price: ${{this.price}} </p>
+            <p>Category: {{this.category}} </p>
+            <p>Number of Meals: {{this.numOfMeals}} </p>
+            <p>Content: {{this.content}}</p>
+            {{#if this.isTop}}
+            <i class="fas fa-star">Top Meal</i>
+            {{/if}}
+            <br/>
+        </div>        
+    {{/each}}
+    </div>
+</div>
