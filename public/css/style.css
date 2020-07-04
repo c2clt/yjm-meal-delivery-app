@@ -250,6 +250,43 @@ body {
     margin-bottom: 1rem;
 }
 
+/*dashboard page*/
+.welcome {
+    background-color: white;
+    margin-bottom: 2rem;
+}
+.wel-banner {
+    text-align: center;
+    width: 100%;
+}
+.wel-banner img {
+    margin: 1rem auto;
+    border-radius: 5%;
+    opacity: 0.5;
+}
+
+.welcome h3 {
+    font-weight: bolder;
+    letter-spacing: 0.2rem;
+}
+
+.myaccount {
+    margin-top: 2rem;
+}
+.accttl {
+    font-weight: bold;
+    color: lightcoral;
+}
+.slash {
+    color: black;
+}
+.welcome a {
+    color: lightcoral;
+}
+.name, .order, .gift-card {
+    font-size: 1.2rem;
+    font-weight: bolder;
+}
 /*footer*/
 .footer {
     padding-top: 1rem;
