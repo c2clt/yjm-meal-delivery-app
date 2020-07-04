@@ -98,7 +98,7 @@ router.post("/registration", (req, res)=>{
     }
 
     if (errors.length > 0) {
-        res.render("#", {
+        res.render("forms/registration", {
             title: "Registration Page",
             errorFirst: firstNameErr,
             errorLast: lastNameErr,
@@ -109,9 +109,30 @@ router.post("/registration", (req, res)=>{
         });
     }
     else {
-        res.redirect("/dashboard");
-    }
+        const sgMail = require('@sendgrid/mail');
+        sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
+        const msg = {
+            to: `${email}`,
+            from: `jzhou175@myseneca.ca`,
+            subject: `Registration Form Received`,
+            html: 
+            `Welcome to Join YJM Meal Delivery<br>
+            Here is your registration information:<br>
+            Full Name: ${firstName} ${lastName}<br>
+            Phone Number: ${phoneNumber}<br>
+            Email Address: ${email}<br>
+            `
+        };
 
+        // Asynchronous operation (who don't know how long this will take to excute)
+        sgMail.send(msg)
+        .then(()=>{
+            res.redirect("/dashboard");
+        })
+        .catch(err=>{
+            console.log(`Error ${err}`);
+        });        
+    }
 });
 
 module.exports = router;
