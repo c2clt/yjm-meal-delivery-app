@@ -12,11 +12,4 @@ router.get("/", (req, res)=>{
     });
 });
 
-// dashboard route
-router.get("/dashboard", (req, res)=>{
-    res.render("general/dashboard", {
-        title: "Welcome Page"
-    });
-});
-
 module.exports = router;

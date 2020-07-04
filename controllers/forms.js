@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
+let regInfo = {};
+
 // login route
 router.get("/login", (req, res)=>{
     res.render("forms/login", {
@@ -9,15 +11,16 @@ router.get("/login", (req, res)=>{
 });
 
 router.post("/login", (req, res)=>{
+    const { email, password } = req.body;
     let errors = [];
     let errUsername = "";
-    if (req.body.email == "") {       
+    if (email == "") {       
         errUsername = "Email address as username is required"; 
         errors.push(errUsername);
     }
 
     let errPassword = "";
-    if (req.body.password == ""){  
+    if (password == ""){  
         errPassword = "Password is required for login";     
         errors.push(errPassword);
     }
@@ -26,11 +29,12 @@ router.post("/login", (req, res)=>{
         res.render("forms/login", {
             title: "Login Page",
             usernameError: errUsername,
-            passwordError: errPassword
+            passwordError: errPassword,
+            formData: { email, password }
         });
     }
     else {
-        res.redirect("/dashboard");
+        res.redirect("/forms/dashboard");
     }
 });
 
@@ -45,7 +49,6 @@ router.get("/registration", (req, res)=>{
 router.post("/registration", (req, res)=>{
     
     const { firstName, lastName, phoneNumber, email, password, repeatpsd } = req.body;
-
     let errors = [];
     let firstNameErr = "";
     if(firstName == "") {
@@ -105,7 +108,8 @@ router.post("/registration", (req, res)=>{
             errorPhone: phoneNumberErr,
             errorEmail: emailErr,
             errorPsd: passwordErr,
-            errorRepeat: repeatpsdErr
+            errorRepeat: repeatpsdErr,
+            formData: { firstName, lastName, phoneNumber, email, password, repeatpsd }
         });
     }
     else {
@@ -127,12 +131,21 @@ router.post("/registration", (req, res)=>{
         // Asynchronous operation (who don't know how long this will take to excute)
         sgMail.send(msg)
         .then(()=>{
-            res.redirect("/dashboard");
+            regInfo = { firstName, lastName, phoneNumber, email, password, repeatpsd };
+            res.redirect("/forms/dashboard");
         })
         .catch(err=>{
             console.log(`Error ${err}`);
         });        
     }
+});
+
+// dashboard route
+router.get("/dashboard", (req, res)=>{
+    res.render("forms/dashboard", {
+        title: "Welcome Page",
+        account: regInfo
+    });
 });
 
 module.exports = router;

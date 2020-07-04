@@ -9,27 +9,27 @@
             
             <p style="text-align:center">OR</p>
 
-            <input type="text" id="firstName" name="firstName" class="form-control" placeholder="First name" autofocus="">
+            <input type="text" id="firstName" name="firstName" value="{{formData.firstName}}" class="form-control" placeholder="First name" autofocus="">
             <div class="errors firstName">
                 {{errorFirst}}
             </div>
-            <input type="text" id="lastName" name="lastName" class="form-control" placeholder="Last name" autofocus="">
+            <input type="text" id="lastName" name="lastName" value="{{formData.lastName}}" class="form-control" placeholder="Last name" autofocus="">
             <div class="errors lastName">
                 {{errorLast}}
             </div>
-            <input type="tel" id="phoneNumber" name="phoneNumber" class="form-control" placeholder="Phone number">
+            <input type="tel" id="phoneNumber" name="phoneNumber" value="{{formData.phoneNumber}}" class="form-control" placeholder="Phone number">
             <div class="errors phone">
                 {{errorPhone}}
             </div>
-            <input type="email" id="userEmail" name="email" class="form-control" placeholder="Email address">
+            <input type="email" id="userEmail" name="email" value="{{formData.email}}" class="form-control" placeholder="Email address">
             <div class="errors email">
                 {{errorEmail}}
             </div>
-            <input type="password" id="user-pass" name="password" class="form-control" placeholder="Password">
+            <input type="password" id="user-pass" name="password" value="{{formData.password}}" class="form-control" placeholder="Password">
             <div class="errors password">
                 {{errorPsd}}
             </div>
-            <input type="password" id="user-repeatpass" name="repeatpsd" class="form-control" placeholder="Repeat Password">
+            <input type="password" id="user-repeatpass" name="repeatpsd" value="{{formData.repeatpsd}}" class="form-control" placeholder="Repeat Password">
             <div class="errors repeatPsd">
                 {{errorRepeat}}
             </div>

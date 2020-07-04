@@ -244,7 +244,7 @@ body {
 
 /*styling errors in forms*/
 
-.errors {
+.errors, .errorsLogin {
     font-size: small;
     color: red;
     margin-bottom: 1rem;
