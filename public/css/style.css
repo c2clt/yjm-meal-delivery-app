@@ -332,14 +332,44 @@ body {
 
 .social-media i {
     padding: 0.5rem;
-    color: lightcoral;
+}
+
+.social-media .facebook {
+    color: rgb(67, 126, 236);
+}
+
+.social-media .instagram {
+    color: rgb(169, 73, 233);
+}
+.social-media .twitter {
+    color: rgb(75, 176, 243);
 }
 
 .payment-methods i {
     padding: 0.5rem;
-    color: cadetblue;
 }
 
+.payment-methods .mastercard {
+    color: rgb(248, 118, 58);
+}
+.payment-methods .visa {
+    color: rgb(58, 188, 248);
+}
+.payment-methods .applePay {
+    color: black;
+}
+.payment-methods .googlePay {
+    color: rgb(161, 207, 34);
+}
+.payment-methods .amex {
+    color: rgb(39, 185, 243);
+}
+.payment-methods .wechat {
+    color: rgb(10, 255, 10);
+}
+.payment-methods .alipay {
+    color: rgb(9, 227, 246);
+}
 
 @media screen and (max-width: 600px) {
     .site-title, .search-bar, .shopping-basket {
