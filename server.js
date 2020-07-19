@@ -1,7 +1,7 @@
 const express = require("express");
 const exphbs = require("express-handlebars");
 const bodyParser = require("body-parser");
-const dataServiceAuth = require("./data_service_auth.js");
+const dataService = require("./dataServer.js");
 
 // load the enironment variable file
 require("dotenv").config({path: "./config/keys.env"});
