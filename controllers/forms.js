@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
+const dataServiceModel = require("../dataServer.js");
 
+dataServiceModel.initialize();
 let regInfo = {};
 
 // login route
@@ -34,7 +36,16 @@ router.post("/login", (req, res)=>{
         });
     }
     else {
-        res.redirect("/forms/dashboard");
+        dataServiceModel.checkUser(req.body)
+        .then(() => {
+            
+            res.redirect("/forms/dashboard");
+        })
+        .catch((err) => {
+            res.render("forms/login", 
+            { errmsg: `Sorry, you entered the wrong email and/or password ${err}` });
+        });
+        
     }
 });
 
@@ -113,6 +124,9 @@ router.post("/registration", (req, res)=>{
         });
     }
     else {
+        regInfo = { firstName, lastName, phoneNumber, email, password };
+        dataServiceModel.registerUser(req.body);
+
         const sgMail = require('@sendgrid/mail');
         sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
         const msg = {
@@ -130,8 +144,7 @@ router.post("/registration", (req, res)=>{
 
         // Asynchronous operation (who don't know how long this will take to excute)
         sgMail.send(msg)
-        .then(()=>{
-            regInfo = { firstName, lastName, phoneNumber, email, password, repeatpsd };
+        .then(()=>{            
             res.redirect("/forms/dashboard");
         })
         .catch(err=>{
