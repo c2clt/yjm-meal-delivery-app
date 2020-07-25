@@ -9,6 +9,9 @@
             
             <p style="text-align:center">OR</p>
 
+            <div class="errors regFail">
+                {{errmsg}}
+            </div>
             <input type="text" id="firstName" name="firstName" value="{{formData.firstName}}" class="form-control" placeholder="First name" autofocus="">
             <div class="errors firstName">
                 {{errorFirst}}
@@ -33,6 +36,8 @@
             <div class="errors repeatPsd">
                 {{errorRepeat}}
             </div>
+            <input type="checkbox" id="isClerk" name="isClerk" value={{formData.isClerk}}>
+            <label for="isClerk">Are you the data clerk?</label>
             <input class="btn btn-primary btn-block" type="submit" value="Sign Up">
             <hr>
 

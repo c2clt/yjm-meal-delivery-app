@@ -11,7 +11,8 @@ let userSchema = new Schema({
         type: String,
         unique: true
     },
-    "password": String
+    "password": String,
+    "isClerk": Boolean
 });
 
 // register User model using the userScehma
@@ -39,13 +40,11 @@ module.exports.initialize = function() {
 };
 
 module.exports.registerUser = function(registerData) {
-    return new Promise(function(resolve, reject) { 
-        console.log(registerData);       
+    return new Promise(function(resolve, reject) {        
         User.findOne({ email: registerData.email })
         .exec()
         .then((user) => {
             if(user) {
-                console.log(`${user.email} found!`);
                 reject(`The user is already in the database`);
             }
             else {
@@ -63,13 +62,11 @@ module.exports.registerUser = function(registerData) {
                                 registerData.password = hash;
         
                                 let newUser = new User(registerData);
-                                console.log(newUser);
                                 newUser.save((err) => {
                                     if(err) {
                                         reject(`There was an error saving the new user: ${err}`);
                                     }
                                     else {
-                                        console.log(`New user was saved.`);
                                         resolve();
                                     }
                                 });
@@ -82,15 +79,12 @@ module.exports.registerUser = function(registerData) {
         .catch((err) => {
             console.log(`There was an error: ${err}`);
         });
-
-        console.log(registerData.firstName)
     });    
 };
 
 
 module.exports.checkUser = function(userData) {
     return new Promise(function(resolve, reject) {
-        console.log(`Entered email: ${userData.email}`);
         User.find({ email: userData.email})
         .exec()
         .then((users) => {
@@ -100,8 +94,7 @@ module.exports.checkUser = function(userData) {
             }
             else {
                 bcrypt.compare(userData.password, users[0].password, (err, isMatch) => {
-                    if(isMatch) {
-                        console.log(`Login: passwords match`);
+                    if(isMatch) {                        
                         resolve(users[0]);
                     }
                     else {

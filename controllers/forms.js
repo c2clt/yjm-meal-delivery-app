@@ -1,9 +1,29 @@
 const express = require("express");
 const router = express.Router();
 const dataServiceModel = require("../dataServer.js");
+const clientSessions = require("express-session");
+
+// Setup client-sessions
+router.use(clientSessions({
+    cookieName: "session", // this is the object name that will be added to 'req'
+    secret: "web322_A7", // this should be a long un-guessable string.
+    duration: 2 * 60 * 1000, // duration of the session in milliseconds (2 minutes)
+    activeDuration: 1000 * 60, // the session will be extended by this many ms each request (1 minute)
+    resave: true,
+    saveUninitialized: true
+  }));
+
+
+// This is a helper middleware function that checks if a user is logged in
+function ensureLogin(req, res, next) {
+    if (!req.session.user) {
+      res.redirect("/login");
+    } else {
+      next();
+    }
+} 
 
 dataServiceModel.initialize();
-let regInfo = {};
 
 // login route
 router.get("/login", (req, res)=>{
@@ -37,9 +57,21 @@ router.post("/login", (req, res)=>{
     }
     else {
         dataServiceModel.checkUser(req.body)
-        .then(() => {
-            
-            res.redirect("/forms/dashboard");
+        .then((user) => {
+            req.session.user = {
+                firstName: user.firstName,
+                lastName: user.lastName,
+                phoneNumber: user.phoneNumber,
+                email: user.email,
+                isClerk: user.isClerk
+            }
+
+            if(user.isClerk) {
+                res.redirect("/forms/administration");
+            }
+            else {
+                res.redirect("/forms/dashboard");
+            }            
         })
         .catch((err) => {
             res.render("forms/login", 
@@ -59,7 +91,7 @@ router.get("/registration", (req, res)=>{
 // process registration form when user submits form
 router.post("/registration", (req, res)=>{
     
-    const { firstName, lastName, phoneNumber, email, password, repeatpsd } = req.body;
+    const { firstName, lastName, phoneNumber, email, password, repeatpsd, isClerk } = req.body;
     let errors = [];
     let firstNameErr = "";
     if(firstName == "") {
@@ -120,12 +152,37 @@ router.post("/registration", (req, res)=>{
             errorEmail: emailErr,
             errorPsd: passwordErr,
             errorRepeat: repeatpsdErr,
-            formData: { firstName, lastName, phoneNumber, email, password, repeatpsd }
+            formData: { firstName, lastName, phoneNumber, email, password, repeatpsd, isClerk }
         });
     }
     else {
-        regInfo = { firstName, lastName, phoneNumber, email, password };
-        dataServiceModel.registerUser(req.body);
+        console.log(req.body);
+        if(req.body.isClerk = " "){
+            req.body.isClerk = true;
+        }
+        else {
+            req.body.isClerk = false;
+        }
+        dataServiceModel.registerUser(req.body).then(() => {
+            req.session.user = {
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
+                phoneNumber: req.body.phoneNumber,
+                email: req.body.email,
+                isClerk: req.body.isClerk
+            }
+
+            if(isClerk) {
+                res.redirect("/forms/administration");
+            }
+            else {
+                res.redirect("/forms/dashboard");
+            }
+        })
+        .catch((err) => {
+            res.render("forms/registration", 
+                        { errmsg: err });
+        });
 
         const sgMail = require('@sendgrid/mail');
         sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
@@ -154,11 +211,25 @@ router.post("/registration", (req, res)=>{
 });
 
 // dashboard route
-router.get("/dashboard", (req, res)=>{
+router.get("/dashboard", ensureLogin, (req, res)=>{
     res.render("forms/dashboard", {
-        title: "Welcome Page",
-        account: regInfo
+        title: "Welcome Dashboard Page",
+        user: req.session.user
     });
+});
+
+// administration route
+router.get("/administration", ensureLogin, (req, res)=>{
+    res.render("forms/administration", {
+        title: "Welcome Administration Page",
+        user: req.session.user
+    });
+});
+
+//logout route
+router.get("/logout", (req, res) => {
+    req.session.destroy();
+    res.redirect("/forms/login");
 });
 
 module.exports = router;
