@@ -1,6 +1,10 @@
 const express = require("express");
 const exphbs = require("express-handlebars");
+const Handlebars = require("handlebars");
 const bodyParser = require("body-parser");
+
+// Import function exported by newly installed node modules.
+const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');
 
 // load the enironment variable file
 require("dotenv").config({path: "./config/keys.env"});
@@ -8,7 +12,7 @@ require("dotenv").config({path: "./config/keys.env"});
 const app = express();
 
 //Handlebars middleware (This tells Express to set handlebars as the template engine)
-app.engine("handlebars", exphbs());
+app.engine("handlebars", exphbs({handlebars: allowInsecurePrototypeAccess(Handlebars)}));
 app.set("view engine", "handlebars");
 
 app.use(express.static("public"));

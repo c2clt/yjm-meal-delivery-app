@@ -3,13 +3,13 @@
     <div class="row">
     {{#each packages}}
         <div class="col-sm-6 col-md-3 my-col">
-            <p><img src="/img/{{this.image}}" alt="Meal Package"></p>
-            <p class="name">{{this.title}} </p>
-            <p>Price: ${{this.price}} </p>
-            <p>Category: {{this.category}} </p>
-            <p>Number of Meals: {{this.numOfMeals}} </p>
-            <p>Content: {{this.content}}</p>
-            {{#if this.isTop}}
+            <p><img src="/img/{{image}}" alt="Meal Package"></p>
+            <p class="name">{{title}} </p>
+            <p>Price: ${{price}} </p>
+            <p>Category: {{category}} </p>
+            <p>Number of Meals: {{numOfMeals}} </p>
+            <p>Content: {{content}}</p>
+            {{#if isTop}}
             <i class="fas fa-star">Top Meal</i>
             {{/if}}
             <br/>

@@ -2,6 +2,21 @@ const mongooes = require("mongoose");
 const bcrypt = require("bcryptjs");
 const Schema = mongooes.Schema;
 
+let db = mongooes.createConnection(process.env.MONGODB_KEY,
+    {
+        useNewUrlParser: true,
+        useCreateIndex: true,
+        useUnifiedTopology: true
+    }, (err) => {
+        if(err) {
+            console.log(`The was an error connecting the database: ${err}`);
+        }
+        else {
+            console.log(`Successfully connected to the database!`);
+        }
+    }
+);
+
 // define a user Schema
 var userSchema = new Schema({
     "firstName": String,
@@ -15,37 +30,9 @@ var userSchema = new Schema({
     "isClerk": Boolean
 });
 
-let packageSchema = new Schema({
-    "image": String,
-    "title": String,
-    "price": Number,
-    "category": String,
-    "numOfMeals": Number,
-    "content": String,
-    "isTop": Boolean
-});
 // register User model using the userScehma
 // use the users collection in the db to store documents
-let User;
-module.exports.initialize = function() {
-    return new Promise(function (resolve, reject) {
-        let webDB = mongooes.createConnection(process.env.MONGODB_KEY,
-            {
-                useNewUrlParser: true,
-                useCreateIndex: true,
-                useUnifiedTopology: true
-            });
-
-        webDB.on('error', (err)=>{
-            reject(err); // reject the promise with the provided error
-        });
-        webDB.once('open', ()=>{
-            console.log(`Successfully connected to the database`);
-            User = webDB.model("users", userSchema);
-            resolve();
-        });
-    });
-};
+let User = db.model("users", userSchema);;
 
 module.exports.registerUser = function(registerData) {
     return new Promise(function(resolve, reject) {        
