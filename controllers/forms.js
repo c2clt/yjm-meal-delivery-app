@@ -3,6 +3,7 @@ const router = express.Router();
 const dataServiceModel = require("../dataServer.js");
 const clientSessions = require("express-session");
 
+dataServiceModel.initialize();
 // Setup client-sessions
 router.use(clientSessions({
     cookieName: "session", // this is the object name that will be added to 'req'
@@ -22,8 +23,6 @@ function ensureLogin(req, res, next) {
       next();
     }
 } 
-
-dataServiceModel.initialize();
 
 // login route
 router.get("/login", (req, res)=>{
@@ -156,7 +155,7 @@ router.post("/registration", (req, res)=>{
         });
     }
     else {
-        console.log(req.body);
+        //console.log(req.body);
         if(req.body.isClerk = " "){
             req.body.isClerk = true;
         }
@@ -171,8 +170,9 @@ router.post("/registration", (req, res)=>{
                 email: req.body.email,
                 isClerk: req.body.isClerk
             }
+            console.log(req.session.user);
 
-            if(isClerk) {
+            if(req.body.isClerk) {
                 res.redirect("/forms/administration");
             }
             else {

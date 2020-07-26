@@ -1,0 +1,41 @@
+<div id="addPackage">
+    <form action="/packages/add" method="POST">
+  <div class="form-group">
+    <label for="title">Name</label>
+    <input type="text" class="form-control" id="title" name="title" placeholder="Enter new package name">
+  </div>
+  <div class="form-group">
+    <label for="price">Price</label>
+    <input type="text" class="form-control" id="price" name="price" placeholder="Enter new package price">
+  </div>
+  <div class="form-group">
+      <label for="category">Category</label>
+      <select id="category" class="form-control">
+        <option selected>Muscle Gain</option>
+        <option>Veggie</option>
+        <option value="">Cartoon</option>
+        <option value="">Others</option>
+      </select>
+    </div>
+  <div class="form-group">
+    <label for="numOfMeals">Number of Meals</label>
+    <input type="text" class="form-control" id="numOfMeals" name="numOfMeals" placeholder="Enter a number">
+  </div>
+  <div class="form-group">
+    <label for="content">Description</label>
+    <input type="text" class="form-control" id="content" name="content" placeholder="Descript the package">
+  </div>
+  <div class="form-group myCheckbox">    
+    <input type="checkbox" class="form-check-input" id="isTop" name="isTop"> 
+    <label for="isTop">If it is top meal package, please check.</label>   
+  </div>
+  <div class="form-group">
+    <label for="image">Picture of Package</label>
+    <input type="file" class="form-control-file" id="image" name="image">
+  </div>
+  <div class="myaddBtn">
+      <input type="submit" class="btn btn-primary mybtn" value="Add New Package">
+  </div>
+  
+</form>
+</div>

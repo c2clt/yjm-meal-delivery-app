@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 const Schema = mongooes.Schema;
 
 // define a user Schema
-let userSchema = new Schema({
+var userSchema = new Schema({
     "firstName": String,
     "lastName": String,
     "phoneNumber": String,
@@ -15,10 +15,18 @@ let userSchema = new Schema({
     "isClerk": Boolean
 });
 
+let packageSchema = new Schema({
+    "image": String,
+    "title": String,
+    "price": Number,
+    "category": String,
+    "numOfMeals": Number,
+    "content": String,
+    "isTop": Boolean
+});
 // register User model using the userScehma
 // use the users collection in the db to store documents
 let User;
-
 module.exports.initialize = function() {
     return new Promise(function (resolve, reject) {
         let webDB = mongooes.createConnection(process.env.MONGODB_KEY,
@@ -32,7 +40,7 @@ module.exports.initialize = function() {
             reject(err); // reject the promise with the provided error
         });
         webDB.once('open', ()=>{
-            console.log(`Successfully connected to the database`)
+            console.log(`Successfully connected to the database`);
             User = webDB.model("users", userSchema);
             resolve();
         });
@@ -82,7 +90,6 @@ module.exports.registerUser = function(registerData) {
     });    
 };
 
-
 module.exports.checkUser = function(userData) {
     return new Promise(function(resolve, reject) {
         User.find({ email: userData.email})
@@ -108,3 +115,4 @@ module.exports.checkUser = function(userData) {
         });
     });
 };
+
