@@ -60,9 +60,23 @@ for (var i = 0; i < allPackages.length; i++){
 
 module.exports.addPackage = function(packageData) {
     return new Promise(function(resolve, reject) {
-        packageData.isTop = (packageData.isTop) ? true : false;
-
-        
+        if(packageData.isTop == "") {
+            packageData.isTop = true;
+        }
+        else {
+            packageData.isTop = false;
+        }
+        let newPackage = new Package(packageData);
+        console.log(newPackage);
+        newPackage.save((err, data) => {
+            if(err) {
+                reject(`There was an error saving new meal package: ${err}`);
+            }
+            else {
+                console.log(`${data.title} was saved.`);
+                resolve();
+            }
+        })
     });
 }
 
@@ -77,5 +91,18 @@ module.exports.getAllPackagesData = function() {
             reject(`No data found: ${err}`);
         });
     });
+}
+
+module.exports.getTopPackagesData = function() {
+    return new Promise(function(resolve, reject) {
+        Package.find({isTop: true})
+        .exec()
+        .then((data) => {
+            resolve(data);
+        })
+        .catch((err) => {
+            reject(`No top package found: ${err}`);
+        });
+    })
 }
 

@@ -34,13 +34,14 @@ router.get("/mealList", (req, res)=>{
 });
 
 // add new package route
-router.get("/add", ensureLogin, (req, res) => {
+router.get("/add", (req, res) => {
     res.render("packages/addPackage", {
         title: "Add new package"
     });
 });
 
-router.post("/add", ensureLogin, (req, res) => {
+router.post("/add", (req, res) => {
+    console.log(req.body);
     packageDataService.addPackage(req.body).then(() => {
         res.redirect("/packages/mealList");
     })
