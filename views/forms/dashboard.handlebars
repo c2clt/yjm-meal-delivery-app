@@ -2,36 +2,38 @@
     <div class="container wel-banner">
         <img src="/img/welcome.jpg" alt="Welcome Banner">
     </div>
-
-    <div class="container text-center">
-        <h3>Account Details</h3>
-        <p class="accttl">{{user.firstName}} {{user.lastName}}<span class="slash">&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;</span><a href="/forms/logout">Sign Out</a></p>
-    </div>
-    
-    <div class="container myaccount">
-        <div class="row">
-            <div class="col-sm-6 col-md-3">
-                <p class="name">{{user.firstName}} {{user.lastName}}</p>
-                <p class="email">Email: {{user.email}}</p>
-                <p>Phone: {{user.phoneNumber}}</p>
-                <p><a href="#">Manage your information</a></p>
-            </div>
-            <div class="col-sm-6 col-md-3">
-                <p class="order">Order History</p>
-                <p>You haven't placed any orders yet.</p>
-            </div>
-            <div class="col-sm-6 col-md-3">
-                <p class="gift-card">Your Payments</p>
-                <p>Manage payment methods</p>
-                <p>View balances and offers</p>
-            </div>
-            <div class="col-sm-6 col-md-3">
-                <p class="gift-card">Gift Cards</p>
-                <p>You haven't any gift card yet.</p>
-                <p>Subscribe us to win a gift card</p>
-            </div>
+    {{#if user}}
+        <div class="container text-center">
+            <h3>Account Details</h3>
+            <p class="accttl">{{user.firstName}} {{user.lastName}}<span class="slash">&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;</span><a href="/forms/logout">Sign Out</a></p>
         </div>
-    </div> 
+    
+        <div class="container myaccount">
+            <div class="row">
+                <div class="col-sm-6 col-md-3">
+                    <p class="name">{{user.firstName}} {{user.lastName}}</p>
+                    <p class="email">Email: {{user.email}}</p>
+                    <p>Phone: {{user.phoneNumber}}</p>
+                    <p><a href="#">Manage your information</a></p>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <p class="order">Order History</p>
+                    <p><a href="/images/add">Upload your package photo</a></p>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <p class="gift-card">Your Payments</p>
+                    <p>Manage payment methods</p>
+                    <p>View balances and offers</p>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <p class="gift-card">Gift Cards</p>
+                    <p>You haven't any gift card yet.</p>
+                    <p>Subscribe us to win a gift card</p>
+                </div>
+            </div>
+        </div>     
+    {{/if}}
 </div>
+    
 <hr>
 

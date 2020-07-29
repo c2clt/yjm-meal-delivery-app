@@ -1,0 +1,42 @@
+<div id="myPackage">
+    <h2>Updating Package: {{viewData.title}}</h2>
+    <form action="/packages/package/update" method="POST">
+        <div class="form-group">
+            <input type="hidden" class="form-control" id="title" name="title" value="{{viewData.title}}">
+        </div>
+        <div class="form-group">
+            <label for="price">Price</label>
+            <input type="text" class="form-control" id="price" name="price" value="{{viewData.price}}" required>
+        </div>
+        <div class="form-group">
+            <label for="category">Category</label>
+            <select id="category" name="category" class="form-control" required>
+                <option value="{{viewData.category}}" {{#if selected}} selected {{/if}}>{{viewData.category}}</option>
+                <option value="Muscle Gain">Muscle Gain</option>
+                <option value="Veggie">Veggie</option>
+                <option value="Cartoon">Cartoon</option>
+                <option value="Others">Others</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="numOfMeals">Number of Meals</label>
+            <input type="text" class="form-control" id="numOfMeals" name="numOfMeals" value="{{viewData.numOfMeals}}" required>
+        </div>
+        <div class="form-group">
+            <label for="content">Description</label>
+            <input type="text" class="form-control" id="content" name="content" value="{{viewData.content}}" required>
+        </div>
+        <div class="form-group myCheckbox">    
+            <input type="checkbox" class="form-check-input" id="isTop" name="isTop" {{#if viewData.isTop}} checked {{/if}}> 
+            <label for="isTop">If it is top meal package, please check.</label>   
+        </div>
+        <div class="form-group">
+            <label for="image">Picture of Package</label>
+            <input type="file" class="form-control-file" id="image" name="image" value="" required>
+        </div>
+        <div class="myupdateBtn">
+            <input type="submit" class="btn btn-primary mybtn" value="Update Package">
+        </div>
+    
+    </form>
+</div>

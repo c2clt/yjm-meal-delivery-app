@@ -1,23 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const dataServiceModel = require("../dataServer.js");
-const clientSessions = require("express-session");
-
-// Setup client-sessions
-router.use(clientSessions({
-    cookieName: "session", // this is the object name that will be added to 'req'
-    secret: "web322_A7", // this should be a long un-guessable string.
-    duration: 2 * 60 * 1000, // duration of the session in milliseconds (2 minutes)
-    activeDuration: 1000 * 60, // the session will be extended by this many ms each request (1 minute)
-    resave: true,
-    saveUninitialized: true
-  }));
-
 
 // This is a helper middleware function that checks if a user is logged in
 function ensureLogin(req, res, next) {
     if (!req.session.user) {
-      res.redirect("/login");
+      res.redirect("/forms/login");
     } else {
       next();
     }
@@ -89,7 +77,7 @@ router.get("/registration", (req, res)=>{
 // process registration form when user submits form
 router.post("/registration", (req, res)=>{
     
-    const { firstName, lastName, phoneNumber, email, password, repeatpsd, isClerk } = req.body;
+    const { firstName, lastName, phoneNumber, email, password, repeatpsd } = req.body;
     let errors = [];
     let firstNameErr = "";
     if(firstName == "") {
@@ -150,27 +138,20 @@ router.post("/registration", (req, res)=>{
             errorEmail: emailErr,
             errorPsd: passwordErr,
             errorRepeat: repeatpsdErr,
-            formData: { firstName, lastName, phoneNumber, email, password, repeatpsd, isClerk }
+            formData: { firstName, lastName, phoneNumber, email, password, repeatpsd }
         });
     }
     else {
-        //console.log(req.body);
-        if(req.body.isClerk = " "){
-            req.body.isClerk = true;
-        }
-        else {
-            req.body.isClerk = false;
-        }
+        
         dataServiceModel.registerUser(req.body).then(() => {
             req.session.user = {
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
                 phoneNumber: req.body.phoneNumber,
-                email: req.body.email,
-                isClerk: req.body.isClerk
+                email: req.body.email
             }
             
-            if(req.body.isClerk) {
+            if(req.session.user.isClerk) {
                 res.redirect("/forms/administration");
             }
             else {

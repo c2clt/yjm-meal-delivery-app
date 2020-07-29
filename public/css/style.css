@@ -250,14 +250,14 @@ body {
 }
 
 /*add package form*/
-#addPackage {
+#addPackage, #myPackage {
     width: 60%;
     margin: 5rem auto;
     padding: auto 1rem;
     background-color: lightgoldenrodyellow;
 }
 
-#addPackage label {
+#addPackage label, #myPackage label {
     margin-left: 3rem;
     margin-top: 1rem;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -265,30 +265,53 @@ body {
 }
 
 
-#addPackage input, #addPackage select {
+#addPackage input, #addPackage select, #myPackage input, #myPackage select {
     width: 90%;
     margin: 0.5rem auto;
 }
 
-#addPackage .myCheckbox label {
+#addPackage .myCheckbox label, #myPackage .myCheckbox label {
     display: inline;
     margin-left: 3rem;
 }
 
-#addPackage .myaddBtn {
+#addPackage .myaddBtn, #myPackage .myupdateBtn {
     width: 40%;
     margin: 0.2rem auto;
 }
 
-#addPackage .myaddBtn input {
+#addPackage .myaddBtn input, #myPackage .myupdateBtn input {
     background-color: lightcoral;
     border-color: lightcoral;
     font-weight: bolder;
     color: lightyellow;
 }
 
+.myList{
+    width: 100%;
+    margin: 1rem auto;
+    background: rgba(248, 180, 180, 0.5);
+}
+.myList h2, #myPackage h2 {
+    font-family: cursive;
+    font-weight: bolder;
+    margin: 1rem auto;
+}
+.myList h2 a {
+    color: lightcoral;
+    font-weight: bolder;
+    background-color: white;
+    border: none;
+    flex: 1;
+    text-align: right;
+}
+.myList img {
+    width: 100px;
+}
 
-
+.myList .top {
+    color: lightcoral;
+}
 /*dashboard page*/
 .welcome {
     background-color: white;

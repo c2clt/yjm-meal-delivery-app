@@ -2,15 +2,15 @@
     <form action="/packages/add" method="POST">
   <div class="form-group">
     <label for="title">Name</label>
-    <input type="text" class="form-control" id="title" name="title" value="" placeholder="Enter new package name">
+    <input type="text" class="form-control" id="title" name="title" value="" placeholder="Enter new package name" required>
   </div>
   <div class="form-group">
     <label for="price">Price</label>
-    <input type="text" class="form-control" id="price" name="price" value="" placeholder="Enter new package price">
+    <input type="text" class="form-control" id="price" name="price" value="" placeholder="Enter new package price" required>
   </div>
   <div class="form-group">
       <label for="category">Category</label>
-      <select id="category" name="category" class="form-control">
+      <select id="category" name="category" class="form-control" required>
         <option value="Muscle Gain" selected>Muscle Gain</option>
         <option value="Veggie">Veggie</option>
         <option value="Cartoon">Cartoon</option>
@@ -19,11 +19,11 @@
     </div>
   <div class="form-group">
     <label for="numOfMeals">Number of Meals</label>
-    <input type="text" class="form-control" id="numOfMeals" name="numOfMeals" value="" placeholder="Enter a number">
+    <input type="text" class="form-control" id="numOfMeals" name="numOfMeals" value="" placeholder="Enter a number" required>
   </div>
   <div class="form-group">
     <label for="content">Description</label>
-    <input type="text" class="form-control" id="content" name="content" value="" placeholder="Descript the package">
+    <input type="text" class="form-control" id="content" name="content" value="" placeholder="Descript the package" required>
   </div>
   <div class="form-group myCheckbox">    
     <input type="checkbox" class="form-check-input" id="isTop" name="isTop" value=""> 
@@ -31,7 +31,7 @@
   </div>
   <div class="form-group">
     <label for="image">Picture of Package</label>
-    <input type="file" class="form-control-file" id="image" name="image" value="">
+    <input type="file" class="form-control-file" id="image" name="image" value="" required>
   </div>
   <div class="myaddBtn">
       <input type="submit" class="btn btn-primary mybtn" value="Add New Package">

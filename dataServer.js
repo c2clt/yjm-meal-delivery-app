@@ -27,7 +27,10 @@ var userSchema = new Schema({
         unique: true
     },
     "password": String,
-    "isClerk": Boolean
+    "isClerk": {
+        type:Boolean,
+        default: false
+    }
 });
 
 // register User model using the userScehma

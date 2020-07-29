@@ -68,15 +68,17 @@ module.exports.addPackage = function(packageData) {
         }
         let newPackage = new Package(packageData);
         console.log(newPackage);
-        newPackage.save((err, data) => {
-            if(err) {
-                reject(`There was an error saving new meal package: ${err}`);
-            }
-            else {
-                console.log(`${data.title} was saved.`);
-                resolve();
-            }
-        })
+        if(newPackage) {
+            newPackage.save((err, data) => {
+                if(err) {
+                    reject(`There was an error saving new meal package: ${err}`);
+                }
+                else {
+                    console.log(`${data.title} was saved.`);
+                    resolve();
+                }
+            });
+        }       
     });
 }
 
@@ -104,5 +106,65 @@ module.exports.getTopPackagesData = function() {
             reject(`No top package found: ${err}`);
         });
     })
+}
+
+module.exports.getPackageByTitle = function(packageTtl) {
+    return new Promise(function(resolve, reject) {
+        Package.findOne({title: packageTtl})
+        .exec()
+        .then((data) => {
+            if(!data) {
+                reject(`No package found`);
+            }
+            else {
+                resolve(data);
+            }            
+        })
+        .catch((err) =>{
+            reject(`There was an error finding the package: ${err}`);
+        });
+    });
+}
+
+module.exports.updatePackage = function(packageData) {
+    return new Promise(function(resolve, reject) {
+        if(packageData.isTop) {
+            packageData.isTop = true;
+        }
+        else {
+            packageData.isTop = false;
+        }
+
+        Package.updateOne({title: packageData.title}, { 
+            $set: {
+                price: packageData.price,
+                category: packageData.category,
+                numOfMeals: packageData.numOfMeals,
+                content: packageData.content,
+                isTop: packageData.isTop,
+                image: packageData.image
+            }
+        })
+        .exec()
+        .then(() => {
+            resolve();
+        })
+        .catch((err) => {
+            reject(`Cannot update the package (${packageData.title}): ${err}`);
+        });
+    });
+}
+
+module.exports.deletePackageByTitle = function(packageTtl) {
+    return new Promise(function(resolve, reject) {
+        Package.deleteOne({title: packageTtl})
+        .exec()
+        .then(() => {
+            resolve();
+        })
+        .catch((err) => {
+            reject(`There was an error deleting the package: ${err}`);
+        });
+    });
 }
 

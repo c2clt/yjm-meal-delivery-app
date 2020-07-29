@@ -1,0 +1,45 @@
+<div class="row myList">    
+    <div class="col-md-12">
+        <h2>Meal Package List Table&nbsp;&nbsp;&nbsp;&nbsp;<a href="/packages/add" class="btn btn-success pull-right">Add New Package</a></h2>
+        <hr />
+        <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th></th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Category</th>
+                <th>Number of Meals</th>
+                <th>Content</th>
+                <th>Top Choice</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each packages}}
+                <tr>
+                    <td><img src="/img/{{image}}" alt="Meal Package"></td>
+                    <td><a href="/packages/package/{{title}}">{{title}}</a></td>
+                    <td>{{price}}</a></td>
+                    <td>{{category}}</td>
+                    <td>{{numOfMeals}}</a></td>
+                    <td>{{content}}</a></td>
+                    <td class="top">
+                        {{#if isTop}}
+                            <i class="fas fa-star">Top Meal</i>
+                        {{/if}}
+                    </td>
+                    <td><a href="/packages/delete/{{title}}" class="btn btn-danger">Remove</a></td>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+        </div>
+    </div>
+    {{#unless employees}}
+    <div class="col-md-12 text-center">
+            <strong>{{message}}</strong>
+    </div>
+    {{/unless}}
+</div>
