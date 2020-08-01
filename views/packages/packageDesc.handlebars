@@ -1,0 +1,37 @@
+<div class="container-fluid my-desc">
+    <div class="row">
+        <div class="col-md-6 desc-img">
+            <img src="/img/{{description.image}}" alt="Package Photo">
+        </div>
+        <div class="col-md-6 package-info">
+            <form action="/packages/mealList/{{title}}" method="POST">
+                <div class="form-group">
+                    <label for="title"><h2>{{description.title}}</h2></label>
+                    <input class="form-control" type="hidden" name="title" id="title" value="{{description.title}}">
+                </div>
+                <div class="form-group">
+                    <label for="price">Price: ${{description.price}}</label>
+                    <input class="form-control" type="hidden" name="price" id="price" value="{{description.price}}">
+                </div>
+
+                <p>What would you like to see in your package?</p>
+                <div class="form-group">
+                    <label for="content">{{description.content}}</label>
+                    <input class="form-control" type="hidden" name="content" id="content" value="{{description.content}}">
+                </div>
+                
+                <p>How many meals do you want in your package?</p>
+                <div class="form-group">
+                    <label for="numOfMeals">You can choose up to {{description.numOfMeals}} meals in your package</label>
+                    <input class="form-control" type="hidden" name="numOfMeals" id="numOfMeals" value="{{description.numOfMeals}}">
+                </div>
+                <p for="quantity">How many packages do you want to order?</p>
+                <div class="form-group">                    
+                    <input class="form-control" type="number" name="quantity" id="quantity" min="1" value="" required>
+                </div>
+                <input type="submit" class="btn btn-primary mybtn" value="ADD TO ORDER">
+            </form>
+        </div>
+    </div>
+    
+</div>

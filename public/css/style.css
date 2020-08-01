@@ -170,6 +170,16 @@ body {
     width: 100%;
 }
 
+.my-col a {
+    color: lightseagreen;
+    font-size: 1.2rem;
+}
+
+.my-col a:hover {
+    color: white;
+    text-decoration: none;
+}
+
 /* login regitration forms */
 #login, #registration{
     width: 40%;
@@ -292,7 +302,7 @@ body {
     margin: 1rem auto;
     background: rgba(248, 180, 180, 0.5);
 }
-.myList h2, .myImgs h2, #myPackage h2, #addImg h2 {
+.myList h2, .myImgs h2, #myPackage h2, #addImg h2, .my-desc h2 {
     font-family: cursive;
     font-weight: bolder;
     margin: 1rem auto;
@@ -318,6 +328,39 @@ body {
     width: 80%;
     margin: 1rem auto;
     background: rgba(236, 167, 167, 0.6);
+}
+
+/*package desc page*/
+.my-desc {
+    margin: 1rem auto;
+    background-color: white;
+}
+
+.my-desc .desc-img {
+    margin: 4rem auto;
+}
+
+.my-desc .package-info {
+    margin: 2rem auto;
+}
+
+.my-desc p {
+    font-weight: bolder;
+    color: lightcoral;
+}
+
+.my-desc label {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+.my-desc input[type="number"] {
+    width: 30%;
+}
+.my-desc input[type="submit"] {
+    background-color: lightcoral;
+    border: none;
+    font-weight: bolder;
 }
 
 /*dashboard page*/

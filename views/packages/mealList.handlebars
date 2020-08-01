@@ -3,8 +3,8 @@
     <div class="row">
     {{#each packages}}
         <div class="col-sm-6 col-md-3 my-col">
-            <p><img src="/img/{{image}}" alt="Meal Package"></p>
-            <p class="name">{{title}} </p>
+            <p><a href="/packages/mealList/{{title}}"><img src="/img/{{image}}" alt="Meal Package"></a></p>
+            <p class="name"><a href="/packages/mealList/{{title}}">{{title}}</a></p>
             <p>Price: ${{price}} </p>
             <p>Category: {{category}} </p>
             <p>Number of Meals: {{numOfMeals}} </p>

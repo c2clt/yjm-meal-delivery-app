@@ -56,6 +56,32 @@ router.get("/mealList", (req, res)=>{
       
 });
 
+router.get("/mealList/:title", (req, res) => {
+    let packageDesc = {};
+    packageDataService.getPackageByTitle(req.params.title).then((data) => {
+        if(data) {
+            packageDesc = data;
+            res.render("packages/packageDesc", {
+                title: "Package Description Page",
+                description: packageDesc
+            });
+        }
+        else{
+            packageDesc = null;
+        }
+    })
+    .catch((err) => {
+        packageDesc = null;
+        console.log(`There was an error: ${err}`);
+    });
+});
+
+router.post("/mealList/:title", ensureLogin, (req, res) => {
+    res.render("packages/shopping basket", {
+        title: "Shopping Basket Page"
+    });
+});
+
 // add new package route
 router.get("/add", ensureLogin, (req, res) => {
     res.render("packages/addPackage", {

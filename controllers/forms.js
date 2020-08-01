@@ -1,6 +1,18 @@
 const express = require("express");
 const router = express.Router();
 const dataServiceModel = require("../dataServer.js");
+const clientSessions = require("express-session");
+
+// Setup client-sessions
+router.use(clientSessions({
+    cookieName: "session", // this is the object name that will be added to 'req'
+    secret: "web322_A7", // this should be a long un-guessable string.
+    duration: 2 * 60 * 1000, // duration of the session in milliseconds (2 minutes)
+    activeDuration: 1000 * 60, // the session will be extended by this many ms each request (1 minute)
+    resave: true,
+    saveUninitialized: true
+  }));
+
 
 // This is a helper middleware function that checks if a user is logged in
 function ensureLogin(req, res, next) {
@@ -61,7 +73,7 @@ router.post("/login", (req, res)=>{
         })
         .catch((err) => {
             res.render("forms/login", 
-            { errmsg: `Sorry, you entered the wrong email and/or password ${err}` });
+            { errmsg: `Sorry, you entered the wrong email and/or password: ${err}` });
         });
         
     }
