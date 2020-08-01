@@ -1,0 +1,23 @@
+<div class="row" id="addImg">
+  <div class="col-md-12">
+
+      <h2>Add Package Photo</h2>
+      <hr />
+
+      <form method="POST" action="/packages/photos/add" enctype="multipart/form-data">
+              <div class="row">
+                  <div class="col-md-12">
+                      <div class="form-group">
+                          <label for="photoFile">Package Photo File:</label>
+                          <input class="form-control" id="photoFile" name="photoFile" type="file" accept="image/*"/>
+                      </div>
+                  </div>
+              </div>
+
+          <hr />
+
+          <input type="submit" class="btn btn-primary pull-right" value="Add Photo" /><br /><br /><br />
+
+      </form>
+  </div>
+</div>

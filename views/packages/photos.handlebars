@@ -1,0 +1,15 @@
+<div class="row myImgs">
+    <div class="col-md-12">
+        <h2>Package photos uploaded&nbsp;&nbsp;&nbsp;&nbsp;<a href="/packages/photos/add" class="btn btn-success pull-right">Add package photo</a></h2>
+        <hr />
+    </div>    
+    {{#each photos}}
+        <div class="col-md-4">
+            <img src="/img/uploaded/{{this}}" class="img-responsive img-thumbnail" />
+        </div>
+    {{else}}
+        <div class="col-md-12 text-center">
+            <strong >No Photos Available</strong>
+        </div>
+    {{/each}}
+</div>

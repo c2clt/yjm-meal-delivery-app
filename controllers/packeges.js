@@ -2,6 +2,18 @@ const express = require("express");
 const router = express.Router();
 const packageDataService = require("../packagesData.js");
 const clientSessions = require("express-session");
+const fs = require("fs");
+const path = require("path");
+const multer = require("multer");
+
+const PHOTODIRECTORY = "./public/img/uploaded";
+
+
+//make sure the photos folder exists
+if(!fs.existsSync(PHOTODIRECTORY)) {
+    console.log("Not found directory");
+    fs.mkdirSync(PHOTODIRECTORY);
+}
 
 // Setup client-sessions
 router.use(clientSessions({
@@ -12,6 +24,17 @@ router.use(clientSessions({
     resave: true,
     saveUninitialized: true
   }));
+
+  // multer requires a few options to be setup to store files with file extensions
+const storage = multer.diskStorage({
+    destination: PHOTODIRECTORY,
+    filename: (req, file, cd) => {
+        cd(null, Date.now() + path.extname(file.originalname));
+    }
+});
+
+// tell multer to use the diskStorage function for naming files instead of the default
+const upload= multer({ storage: storage });
 
 // This is a helper middleware function that checks if a user is logged in
 function ensureLogin(req, res, next) {
@@ -34,13 +57,13 @@ router.get("/mealList", (req, res)=>{
 });
 
 // add new package route
-router.get("/add", (req, res) => {
+router.get("/add", ensureLogin, (req, res) => {
     res.render("packages/addPackage", {
         title: "Add new package"
     });
 });
 
-router.post("/add", (req, res) => {
+router.post("/add", ensureLogin, (req, res) => {
     packageDataService.addPackage(req.body).then(() => {
         res.redirect("/packages/mealList");
     })
@@ -91,6 +114,30 @@ router.get("/delete/:title", ensureLogin, (req, res) => {
     }).catch((err) => {
         res.status(500).send(`Unable to delete the package: ${err}`);
     });
+});
+
+router.get("/photos", ensureLogin, (req, res) => {
+    fs.readdir(PHOTODIRECTORY, (err, data) => {
+        if (!err) {
+            res.render("packages/photos", {
+                title: "Packages Photos Page",
+                photos: data
+            });
+        }
+        else {
+            console.log(`There was an error reading the photos from file: ${err}`);
+        }
+    });    
+});
+
+router.get("/photos/add", ensureLogin, (req, res) => {
+    res.render("packages/addPhoto", {
+        title: "Add Photo Page"
+    });
+});
+
+router.post("/photos/add", ensureLogin, upload.single("photoFile"), (req, res) => {
+    res.redirect("/packages/photos");
 });
 
 router.get("/shopping basket", ensureLogin, (req, res) => {

@@ -287,17 +287,17 @@ body {
     color: lightyellow;
 }
 
-.myList{
+.myList, .myImgs {
     width: 100%;
     margin: 1rem auto;
     background: rgba(248, 180, 180, 0.5);
 }
-.myList h2, #myPackage h2 {
+.myList h2, .myImgs h2, #myPackage h2, #addImg h2 {
     font-family: cursive;
     font-weight: bolder;
     margin: 1rem auto;
 }
-.myList h2 a {
+.myList h2 a, .myImgs h2 a {
     color: lightcoral;
     font-weight: bolder;
     background-color: white;
@@ -312,6 +312,14 @@ body {
 .myList .top {
     color: lightcoral;
 }
+
+/*add photo*/
+#addImg {
+    width: 80%;
+    margin: 1rem auto;
+    background: rgba(236, 167, 167, 0.6);
+}
+
 /*dashboard page*/
 .welcome {
     background-color: white;
