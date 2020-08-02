@@ -6,6 +6,9 @@
         <div class="col-md-6 package-info">
             <form action="/packages/mealList/{{title}}" method="POST">
                 <div class="form-group">
+                    <input class="form-control" type="hidden" name="image" value="{{description.image}}">
+                </div>
+                <div class="form-group">
                     <label for="title"><h2>{{description.title}}</h2></label>
                     <input class="form-control" type="hidden" name="title" id="title" value="{{description.title}}">
                 </div>

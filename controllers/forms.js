@@ -1,18 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const dataServiceModel = require("../dataServer.js");
-const clientSessions = require("express-session");
-
-// Setup client-sessions
-router.use(clientSessions({
-    cookieName: "session", // this is the object name that will be added to 'req'
-    secret: "web322_A7", // this should be a long un-guessable string.
-    duration: 2 * 60 * 1000, // duration of the session in milliseconds (2 minutes)
-    activeDuration: 1000 * 60, // the session will be extended by this many ms each request (1 minute)
-    resave: true,
-    saveUninitialized: true
-  }));
-
 
 // This is a helper middleware function that checks if a user is logged in
 function ensureLogin(req, res, next) {
@@ -153,8 +141,7 @@ router.post("/registration", (req, res)=>{
             formData: { firstName, lastName, phoneNumber, email, password, repeatpsd }
         });
     }
-    else {
-        
+    else {        
         dataServiceModel.registerUser(req.body).then(() => {
             req.session.user = {
                 firstName: req.body.firstName,
@@ -178,15 +165,15 @@ router.post("/registration", (req, res)=>{
         const sgMail = require('@sendgrid/mail');
         sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
         const msg = {
-            to: `${email}`,
+            to: `${req.body.email}`,
             from: `jzhou175@myseneca.ca`,
             subject: `Registration Form Received`,
             html: 
             `Welcome to Join YJM Meal Delivery<br>
             Here is your registration information:<br>
-            Full Name: ${firstName} ${lastName}<br>
-            Phone Number: ${phoneNumber}<br>
-            Email Address: ${email}<br>
+            Full Name: ${req.body.firstName} ${req.body.lastName}<br>
+            Phone Number: ${req.body.phoneNumber}<br>
+            Email Address: ${req.body.email}<br>
             `
         };
 

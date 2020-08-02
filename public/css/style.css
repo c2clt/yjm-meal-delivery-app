@@ -302,7 +302,7 @@ body {
     margin: 1rem auto;
     background: rgba(248, 180, 180, 0.5);
 }
-.myList h2, .myImgs h2, #myPackage h2, #addImg h2, .my-desc h2 {
+.myList h2, .myImgs h2, #myPackage h2, #addImg h2, .my-desc h2, .myCart h2 {
     font-family: cursive;
     font-weight: bolder;
     margin: 1rem auto;
@@ -363,6 +363,67 @@ body {
     font-weight: bolder;
 }
 
+/*shopping cart*/
+.myCart {
+    background-color: whitesmoke;
+}
+
+.myCart .container {
+    width: 80%;
+    margin: 2rem auto;
+}
+.myCart .personInfo h5 {
+    color: darkgray;
+    font-weight: bolder;
+}
+.myCart .personInfo h5 a {
+    color: darkgray;
+}
+.myCart .personInfo h5 a:hover {
+    color: lightcoral;
+    text-decoration: none;
+}
+.myCart .shipping input {
+    margin: 0.5rem auto;
+}
+.myCart .table img {
+    width: 100px;
+}
+.myCart .table td {
+    vertical-align: middle;
+}
+.myCart tbody a {
+    color: lightcoral;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 1.2rem;
+    font-weight: bolder;
+}
+.myCart tbody a:hover {
+    text-decoration: none;
+    background-color: darkgray;
+}
+.myCart .my-tfoot {
+    text-align: right;
+}
+.myCart tfoot input[type="text"] {
+    border-style: none;
+    width: 20%;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: bolder;
+}
+.myCart .mybtn {
+    background-color: lightcoral;
+    border: none;
+    font-family: serif;
+    font-size: 1.2rem;
+    font-weight: bolder;
+}
+.myCart .empty {
+    color: lightcoral;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.5rem;
+    font-weight: bolder;
+}
 /*dashboard page*/
 .welcome {
     background-color: white;

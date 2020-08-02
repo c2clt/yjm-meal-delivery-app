@@ -1,0 +1,104 @@
+<div class="container-fluid myCart">    
+    <div class="container">        
+        <h2>Contact Information</h2>
+        <hr />
+        <div class="row personInfo">
+            <div class="col-md-4">
+                <h5>{{user.firstName}} {{user.lastName}}</h5>
+            </div>
+            <div class="col-md-4">
+                <h5><a href="mailto:{{user.email}}">Email: {{user.email}}</a></h5>
+            </div>
+            <div class="col-md-4">
+                <h5><a href="/forms/login">Sign Out</a></h5>
+            </div>            
+        </div>        
+    </div>
+    <div class="errors emptyErr">
+                {{errmsg}}
+    </div>
+    <div class="container">
+        {{#if items}}        
+        <form action="/packages/shoppingCart" method="POST">
+            <div class="shipping">
+                <h2>Shipping Address</h2>
+                <hr/>
+                <div class="row">
+                    <div class="col">
+                    <input type="text" class="form-control" name="shipFirst" value="" placeholder="First name" required>
+                    </div>
+                    <div class="col">
+                    <input type="text" class="form-control" name="shipLast" value="" placeholder="Last name" required>
+                    </div>
+                </div>
+                <input type="text" class="form-control" name="shipAddress" value="" placeholder="Address" required>
+                <input type="text" class="form-control" name="shipApt" value="" placeholder="Apartment suite etc, (optional)" required>
+                <input type="text" class="form-control" name="shipCity" value="" placeholder="City" required>
+                <div class="row">
+                    <div class="col">
+                    <input type="text" class="form-control" name="shipCountry" value="" placeholder="Country/Region" required>
+                    </div>
+                    <div class="col">
+                    <input type="text" class="form-control" name="shipProvince" value="" placeholder="Province" required>
+                    </div>
+                    <div class="col">
+                    <input type="text" class="form-control" name="shipPostal" value="" placeholder="Postal Code" required>
+                    </div>
+                </div>
+                <input type="text" class="form-control" name="shipPhone" value="" placeholder="Phone Number" required>
+            </div>
+            
+            <h2>Order Summary</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Item</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each items}}
+                    <tr>
+                        <td><img src="/img/{{image}}" alt="Meal Package"></td>
+                        <td><a href="/packages/package/{{title}}">{{title}}</a></td>
+                        <td>{{quantity}}</a></td>
+                        <td>{{price}}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td class="my-tfoot" colspan="3">Item Subtotal: </td>
+                        <td><input type="text" name="subtotal" value="${{subtotal}}" readonly></td>
+                    </tr>
+                    <tr>
+                        <td class="my-tfoot" colspan="3">Tax Calculated (GST/HST): </td>
+                        <td><input type="text" name="tax" value="${{tax}}" readonly></td>
+                    </tr>
+                    <tr>
+                        <td class="my-tfoot" colspan="3">Total: </td>
+                        <td><input type="text" name="total" value="${{total}}" readonly></td>
+                    </tr>
+                </tfoot>
+            </table>
+            <div class="row">
+                <div class="col-md-6">
+                    <a href="/packages/mealList"><button class="btn btn-primary mybtn" type="button">Continue Shopping</button></a>
+                </div>            
+                <div class="col-md-6">
+                    <input type="submit" class="btn btn-primary mybtn" value="Place Your Order">
+                </div>            
+            </div>        
+        </form>
+        {{else}}
+        <div class="empty">
+            <p>{{emptyCart}}</p>
+            <p>Your shopping cart is EMPTY</p>
+            <p>Would you like to purchase now? </p>
+            <p><a href="/packages/mealList">Go to our menu</a></p>
+        </div>
+        {{/if}}
+    </div>    
+</div>

@@ -1,13 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const packageDataService = require("../packagesData.js");
-const clientSessions = require("express-session");
 const fs = require("fs");
 const path = require("path");
 const multer = require("multer");
 
 const PHOTODIRECTORY = "./public/img/uploaded";
-
 
 //make sure the photos folder exists
 if(!fs.existsSync(PHOTODIRECTORY)) {
@@ -15,17 +13,7 @@ if(!fs.existsSync(PHOTODIRECTORY)) {
     fs.mkdirSync(PHOTODIRECTORY);
 }
 
-// Setup client-sessions
-router.use(clientSessions({
-    cookieName: "session", // this is the object name that will be added to 'req'
-    secret: "web322_A7", // this should be a long un-guessable string.
-    duration: 2 * 60 * 1000, // duration of the session in milliseconds (2 minutes)
-    activeDuration: 1000 * 60, // the session will be extended by this many ms each request (1 minute)
-    resave: true,
-    saveUninitialized: true
-  }));
-
-  // multer requires a few options to be setup to store files with file extensions
+// multer requires a few options to be setup to store files with file extensions
 const storage = multer.diskStorage({
     destination: PHOTODIRECTORY,
     filename: (req, file, cd) => {
@@ -77,8 +65,11 @@ router.get("/mealList/:title", (req, res) => {
 });
 
 router.post("/mealList/:title", ensureLogin, (req, res) => {
-    res.render("packages/shopping basket", {
-        title: "Shopping Basket Page"
+    packageDataService.addPackageToCart(req.body).then(() => {
+        res.redirect("/packages/shoppingCart");
+    })
+    .catch((err) => {
+        res.status(500).send(`Unable to add the package into shopping cart: ${err}`);
     });
 });
 
@@ -166,8 +157,126 @@ router.post("/photos/add", ensureLogin, upload.single("photoFile"), (req, res) =
     res.redirect("/packages/photos");
 });
 
-router.get("/shopping basket", ensureLogin, (req, res) => {
+router.get("/shoppingCart", ensureLogin, (req, res) => {
+    packageDataService.getAllOrderItems().then((data) => {
+        if(data) {
+            let subtotal = 0;
+            let tax = 0;
+            let total = 0;
+            data.forEach(element => {
+                subtotal += element.quantity * element.price;
+            });
 
+            tax = subtotal * 0.13;
+            total = subtotal + tax;
+
+            res.render("packages/shoppingCart", {
+                title: "Shopping Cart Page",
+                user: req.session.user,
+                items: data,
+                subtotal: subtotal.toFixed(2),
+                tax: tax.toFixed(2),
+                total: total.toFixed(2)
+            });
+        }
+        else {
+            res.render("packages/shoppingCart", {
+                title: "Shopping Cart Page",
+                user: req.session.user,
+                emptyCart: `Your shopping cart is empty`
+            });
+        }
+    });
+});
+
+router.post("/shoppingCart", ensureLogin, (req, res) => {
+    let recipient = `${req.body.shipFirst} ${req.body.shipLast}`;
+    let address1 = `${req.body.shipAddress} ${req.body.shipApt} ${req.body.shipCity}`;
+    let address2 = `${req.body.shipProvince} ${req.body.shipCountry} ${req.body.shipPostal}`;
+    let phone = `${req.body.shipPhone}`;
+
+    let allItems = [];
+    packageDataService.getAllOrderItems().then((data) => {
+        allItems = data;
+    });
+
+    let subtotal = req.body.subtotal;
+    let tax = req.body.tax;
+    let total = req.body.total;
+    let table = `
+    <h2>Order Summary</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each ${allItems}}}
+            <tr>
+                <td>{{title}}</a></td>
+                <td>{{quantity}}</a></td>
+                <td>{{price}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td class="my-tfoot" colspan="3">Item Subtotal: </td>
+                <td><input type="text" name="subtotal" value="${subtotal}" readonly></td>
+            </tr>
+            <tr>
+                <td class="my-tfoot" colspan="3">Tax Calculated (GST/HST): </td>
+                <td><input type="text" name="tax" value="${tax}" readonly></td>
+            </tr>
+            <tr>
+                <td class="my-tfoot" colspan="3">Total: </td>
+                <td><input type="text" name="total" value="${total}" readonly></td>
+            </tr>
+        </tfoot>
+    </table>
+    `;
+    packageDataService.emptyShoppingCart().then(() => {
+        res.render("packages/shoppingCart", {
+            title: "Shopping Cart Page",
+            user: req.session.user,
+            emptyCart: "Your order has been placed"
+        });
+    })
+    .catch((err) => {
+        res.render("packages/shoppingCart", {
+            title: "SHopping Cart Page",
+            errmsg: err
+        });
+    });
+
+    const sgMail = require('@sendgrid/mail');
+    sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
+    const msg = {
+        to: `${req.session.user.email}`,
+        from: `jzhou175@myseneca.ca`,
+        subject: `Your YJM meal packages order are recieved`,
+        html: 
+        ` Thank you for shopping with us.<br />
+        Your order will be sent to:<br />
+        ${recipient} <br/>
+        ${address1} <br/>
+        ${address2} <br/>
+        ${phone} <br />
+        ${table}
+        `
+    };
+
+    // Asynchronous operation (who don't know how long this will take to excute)
+    sgMail.send(msg)
+    .then(() => {            
+        res.redirect("/packages/shoppingCart");
+    })
+    .catch((err) => {
+        console.log(`Error ${err}`);
+    });      
 });
 
 module.exports = router;

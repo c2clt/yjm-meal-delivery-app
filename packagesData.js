@@ -29,34 +29,23 @@ let packageSchema = new Schema({
     "isTop": Boolean,
     "image": String,
 });
-
-// register Package model using the userScehma
-// use the  collection in the db to store documents
+// register Package model using the userSchema
+// use the  collection mealPackages in the db to store documents
 let Package = db.model("mealPackages", packageSchema);
 
-/*
-// populate the local packages created
-for (var i = 0; i < allPackages.length; i++){
-    let local = new Package({
-        title: allPackages[i].title,
-        price: allPackages[i].price,
-        category: allPackages[i].category,
-        numOfMeals: allPackages[i].numOfMeals,
-        content:allPackages[i].content,
-        isTop: allPackages[i].isTop,
-        image: allPackages[i].image
-    });
-
-    local.save((err, data) => {
-        if(err) {
-            console.log(`There was an error saving the local package: ${err}`);
-        }
-        else {
-            console.log(`${data.title} was saved`);
-        }
-    });
-} */
-
+// define a shoppingCart Schema
+let cartSchema = new Schema({
+    "image": String,
+    "title": {
+        type: String,
+        unique: true
+    },
+    "quantity": Number,
+    "price": Number
+});
+// register Cart model using the cartSchema
+// use the collection in the db to store doucuments
+let Cart = db.model("shoppingCarts", cartSchema);
 
 module.exports.addPackage = function(packageData) {
     return new Promise(function(resolve, reject) {
@@ -67,7 +56,6 @@ module.exports.addPackage = function(packageData) {
             packageData.isTop = false;
         }
         let newPackage = new Package(packageData);
-        console.log(newPackage);
         if(newPackage) {
             newPackage.save((err, data) => {
                 if(err) {
@@ -164,6 +152,58 @@ module.exports.deletePackageByTitle = function(packageTtl) {
         })
         .catch((err) => {
             reject(`There was an error deleting the package: ${err}`);
+        });
+    });
+}
+
+module.exports.addPackageToCart = function(itemData) {
+    return new Promise((resolve, reject) => {
+        let newItem = new Cart({
+            image: itemData.image,
+            title: itemData.title,
+            quantity: itemData.quantity,
+            price: itemData.price
+        });
+
+        newItem.save((err, data) => {
+            if(err) {
+                reject(`There was an error saving new item: ${err}`);
+            }
+            else {
+                resolve();
+            }
+        });
+    });
+}
+
+module.exports.getAllOrderItems = function() {
+    return new Promise((resolve, reject) => {
+        Cart.find()
+        .exec()
+        .then((data) => {
+            if(data) {
+                resolve(data);
+            }
+            else {
+                reject(`No item found in the shopping cart`);
+            }
+        })
+        .catch((err) => {
+            reject(`There was an error getting all items in shopping cart: ${err}`);
+        });
+    });
+}
+
+module.exports.emptyShoppingCart = function() {
+    return new Promise((resolve, reject) => {
+        Cart.deleteMany({})
+        .exec()
+        .then(() => {
+            console.log(`The shopping cart was emptied`);
+            resolve();
+        })
+        .catch((err) => {
+            reject(`There was an error emptying the shopping cart: ${err}`);
         });
     });
 }
