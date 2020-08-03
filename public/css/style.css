@@ -307,6 +307,24 @@ body {
     font-weight: bolder;
     margin: 1rem auto;
 }
+.myList .tableList {
+    color: darkslateblue;
+    background: none;
+}
+
+.myList .title {
+    color: darkblue;
+    font-weight: bolder;
+}
+.myList .category {
+    color: purple;
+    font-weight: bolder;
+}
+.myList a:hover {
+    text-decoration: none;
+    color: gray;
+    background-color:white;
+}
 .myList h2 a, .myImgs h2 a {
     color: lightcoral;
     font-weight: bolder;
@@ -389,7 +407,7 @@ body {
 .myCart .table img {
     width: 100px;
 }
-.myCart .table td {
+.myCart .table td, .myList .myTable td {
     vertical-align: middle;
 }
 .myCart tbody a {

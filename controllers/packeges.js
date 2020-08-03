@@ -40,9 +40,19 @@ router.get("/mealList", (req, res)=>{
             title: "Meal Package Page",
             packages: data                         
         });  
-    });    
-      
+    });
 });
+
+router.get("/mealList/:category", (req, res) => {
+    packageDataService.getPackageByCategory(req.params.category).then((data) => {
+        res.render("packages/mealList", {
+            title: `${req.params.category} Package Page`,
+            packages: data
+        });
+    }).catch((err) => {
+        console.log(`There was an error: ${err}`);
+    });
+}); 
 
 router.get("/mealList/:title", (req, res) => {
     let packageDesc = {};
@@ -73,6 +83,17 @@ router.post("/mealList/:title", ensureLogin, (req, res) => {
     });
 });
 
+router.get("/mealTable/:category", ensureLogin, (req, res) => {
+    packageDataService.getPackageByCategory(req.params.category).then((data) => {
+        res.render("packages/mealTable", {
+            title: `${req.params.category} List Page`,
+            packages: data
+        });
+    }).catch((err) => {
+        console.log(`There was an error: ${err}`);
+    });
+});
+
 // add new package route
 router.get("/add", ensureLogin, (req, res) => {
     res.render("packages/addPackage", {
@@ -92,7 +113,7 @@ router.post("/add", ensureLogin, (req, res) => {
 router.get("/mealTable", ensureLogin, (req, res) => {
     packageDataService.getAllPackagesData().then((data) => {
         res.render("packages/mealTable", {
-            title: "Meal List Page",
+            title: "Packages List Page",
             packages: data                         
         });  
     });   
