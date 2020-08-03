@@ -32,7 +32,7 @@
                     </div>
                 </div>
                 <input type="text" class="form-control" name="shipAddress" value="" placeholder="Address" required>
-                <input type="text" class="form-control" name="shipApt" value="" placeholder="Apartment suite etc, (optional)" required>
+                <input type="text" class="form-control" name="shipApt" value="" placeholder="Apartment suite etc, (optional)">
                 <input type="text" class="form-control" name="shipCity" value="" placeholder="City" required>
                 <div class="row">
                     <div class="col">
@@ -63,8 +63,11 @@
                     <tr>
                         <td><img src="/img/{{image}}" alt="Meal Package"></td>
                         <td><a href="/packages/package/{{title}}">{{title}}</a></td>
+                        <input type="hidden" name="title" value="{{title}}" readonly></td>
                         <td>{{quantity}}</a></td>
+                        <input type="hidden" name="quantity" value="{{quantity}}" readonly></td>
                         <td>{{price}}</td>
+                        <input type="hidden" name="price" value="{{price}}" readonly></td>
                     </tr>
                     {{/each}}
                 </tbody>
@@ -94,10 +97,9 @@
         </form>
         {{else}}
         <div class="empty">
-            <p>{{emptyCart}}</p>
-            <p>Your shopping cart is EMPTY</p>
-            <p>Would you like to purchase now? </p>
-            <p><a href="/packages/mealList">Go to our menu</a></p>
+            <p class="placemsg">{{emptyCart}}</p>
+            <p class="msg">Your shopping cart is EMPTY</p>
+            <p class="msg">Would you like to purchase now?&nbsp;&nbsp;&nbsp;&nbsp;<a href="/packages/mealList">Go to OUR PACKAGE MENU</a></p>
         </div>
         {{/if}}
     </div>    

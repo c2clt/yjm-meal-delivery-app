@@ -62,7 +62,6 @@ module.exports.addPackage = function(packageData) {
                     reject(`There was an error saving new meal package: ${err}`);
                 }
                 else {
-                    console.log(`${data.title} was saved.`);
                     resolve();
                 }
             });
@@ -110,6 +109,24 @@ module.exports.getPackageByTitle = function(packageTtl) {
         })
         .catch((err) =>{
             reject(`There was an error finding the package: ${err}`);
+        });
+    });
+}
+
+module.exports.getPackageByCategory = function(categoryName) {
+    return new Promise((resolve, reject) => {
+        Package.find({ category: categoryName })
+        .exec()
+        .then((data) => {
+            if(!data) {
+                reject(`No package found!`);
+            }
+            else {
+                resolve(data);
+            }
+        })
+        .catch((err) => {
+            reject(`There was an error finding catagory: ${err}`);
         });
     });
 }
@@ -199,7 +216,6 @@ module.exports.emptyShoppingCart = function() {
         Cart.deleteMany({})
         .exec()
         .then(() => {
-            console.log(`The shopping cart was emptied`);
             resolve();
         })
         .catch((err) => {

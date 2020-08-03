@@ -149,42 +149,39 @@ router.post("/registration", (req, res)=>{
                 phoneNumber: req.body.phoneNumber,
                 email: req.body.email
             }
-            
-            if(req.session.user.isClerk) {
-                res.redirect("/forms/administration");
-            }
-            else {
-                res.redirect("/forms/dashboard");
-            }
+            const sgMail = require('@sendgrid/mail');
+            sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
+            const msg = {
+                to: `${req.body.email}`,
+                from: `jzhou175@myseneca.ca`,
+                subject: `Registration Form Received`,
+                html: 
+                `Welcome to Join YJM Meal Delivery<br>
+                Here is your registration information:<br>
+                Full Name: ${req.body.firstName} ${req.body.lastName}<br>
+                Phone Number: ${req.body.phoneNumber}<br>
+                Email Address: ${req.body.email}<br>
+                `
+            };
+
+            // Asynchronous operation (who don't know how long this will take to excute)
+            sgMail.send(msg)
+            .then(()=>{            
+                if(req.session.user.isClerk) {
+                    res.redirect("/forms/administration");
+                }
+                else {
+                    res.redirect("/forms/dashboard");
+                }
+            })
+            .catch(err=>{
+                console.log(`Error ${err}`);
+            });             
         })
         .catch((err) => {
             res.render("forms/registration", 
                         { errmsg: err });
-        });
-
-        const sgMail = require('@sendgrid/mail');
-        sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
-        const msg = {
-            to: `${req.body.email}`,
-            from: `jzhou175@myseneca.ca`,
-            subject: `Registration Form Received`,
-            html: 
-            `Welcome to Join YJM Meal Delivery<br>
-            Here is your registration information:<br>
-            Full Name: ${req.body.firstName} ${req.body.lastName}<br>
-            Phone Number: ${req.body.phoneNumber}<br>
-            Email Address: ${req.body.email}<br>
-            `
-        };
-
-        // Asynchronous operation (who don't know how long this will take to excute)
-        sgMail.send(msg)
-        .then(()=>{            
-            res.redirect("/forms/dashboard");
-        })
-        .catch(err=>{
-            console.log(`Error ${err}`);
-        });        
+        });      
     }
 });
 

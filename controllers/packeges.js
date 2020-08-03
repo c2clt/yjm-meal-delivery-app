@@ -195,14 +195,30 @@ router.post("/shoppingCart", ensureLogin, (req, res) => {
     let address2 = `${req.body.shipProvince} ${req.body.shipCountry} ${req.body.shipPostal}`;
     let phone = `${req.body.shipPhone}`;
 
-    let allItems = [];
-    packageDataService.getAllOrderItems().then((data) => {
-        allItems = data;
-    });
+    let tableBody = ``; 
+    if ((typeof (req.body.title)) === "string") {
+        tableBody += `
+            <tr>
+                <td>${req.body.title}</td>
+                <td>${req.body.quantity}</td>
+                <td>${req.body.price}</td>
+            </tr>`;
+    } 
+    else {
+        for(var i = 0; i < req.body.title.length; i++) {
+            tableBody += `
+                <tr>
+                    <td>${req.body.title[i]}</td>
+                    <td>${req.body.quantity[i]}</td>
+                    <td>${req.body.price[i]}</td>
+                </tr>`;
+        }
+    }
 
     let subtotal = req.body.subtotal;
     let tax = req.body.tax;
     let total = req.body.total;
+    
     let table = `
     <h2>Order Summary</h2>
     <table class="table">
@@ -214,69 +230,60 @@ router.post("/shoppingCart", ensureLogin, (req, res) => {
             </tr>
         </thead>
         <tbody>
-            {{#each ${allItems}}}
-            <tr>
-                <td>{{title}}</a></td>
-                <td>{{quantity}}</a></td>
-                <td>{{price}}</td>
-            </tr>
-            {{/each}}
+            ${tableBody}        
         </tbody>
         <tfoot>
             <tr>
-                <td class="my-tfoot" colspan="3">Item Subtotal: </td>
-                <td><input type="text" name="subtotal" value="${subtotal}" readonly></td>
+                <td colspan="2">Item Subtotal: </td>
+                <td>${subtotal}</td>
             </tr>
             <tr>
-                <td class="my-tfoot" colspan="3">Tax Calculated (GST/HST): </td>
-                <td><input type="text" name="tax" value="${tax}" readonly></td>
+                <td colspan="2">Tax Calculated (GST/HST): </td>
+                <td>${tax}</td>
             </tr>
             <tr>
-                <td class="my-tfoot" colspan="3">Total: </td>
-                <td><input type="text" name="total" value="${total}" readonly></td>
+                <td colspan="2">Total: </td>
+                <td>${total}</td>
             </tr>
         </tfoot>
     </table>
     `;
     packageDataService.emptyShoppingCart().then(() => {
-        res.render("packages/shoppingCart", {
-            title: "Shopping Cart Page",
-            user: req.session.user,
-            emptyCart: "Your order has been placed"
-        });
+        const sgMail = require('@sendgrid/mail');
+        sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
+        const msg = {
+            to: `${req.session.user.email}`,
+            from: `jzhou175@myseneca.ca`,
+            subject: `Your YJM meal packages order are recieved`,
+            html: 
+            ` Thank you for shopping with us.<br />
+            Your order will be sent to:<br />
+            <strong>${recipient}</strong> <br/>
+            ${address1} <br/>
+            ${address2} <br/>
+            ${phone} <br />
+            ${table}
+            `
+        };
+        // Asynchronous operation (who don't know how long this will take to excute)
+        sgMail.send(msg)
+        .then(() => {            
+            res.render("packages/shoppingCart", {
+                title: "Shopping Cart Page",
+                user: req.session.user,
+                emptyCart: "Your order has been placed. Thank you for shopping with us"
+            });
+        })
+        .catch((err) => {
+            console.log(`Error ${err}`);
+        });          
     })
     .catch((err) => {
         res.render("packages/shoppingCart", {
             title: "SHopping Cart Page",
             errmsg: err
         });
-    });
-
-    const sgMail = require('@sendgrid/mail');
-    sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
-    const msg = {
-        to: `${req.session.user.email}`,
-        from: `jzhou175@myseneca.ca`,
-        subject: `Your YJM meal packages order are recieved`,
-        html: 
-        ` Thank you for shopping with us.<br />
-        Your order will be sent to:<br />
-        ${recipient} <br/>
-        ${address1} <br/>
-        ${address2} <br/>
-        ${phone} <br />
-        ${table}
-        `
-    };
-
-    // Asynchronous operation (who don't know how long this will take to excute)
-    sgMail.send(msg)
-    .then(() => {            
-        res.redirect("/packages/shoppingCart");
-    })
-    .catch((err) => {
-        console.log(`Error ${err}`);
-    });      
+    });   
 });
 
 module.exports = router;

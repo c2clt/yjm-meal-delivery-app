@@ -46,7 +46,6 @@ module.exports.registerUser = function(registerData) {
                 reject(`The user is already in the database`);
             }
             else {
-                console.log(`${registerData.email} not found`);
                 bcrypt.genSalt(10, (err, salt) => {
                     if(err) {
                         reject(`There was an error encrypting the password: ${err}`);
@@ -75,7 +74,7 @@ module.exports.registerUser = function(registerData) {
             }
         })
         .catch((err) => {
-            console.log(`There was an error: ${err}`);
+            reject(`There was an error: ${err}`);
         });
     });    
 };
@@ -86,7 +85,6 @@ module.exports.checkUser = function(userData) {
         .exec()
         .then((users) => {
             if(users.length == 0) {
-                console.log(`Unable to find the user: ${userData.email}`);
                 reject(`Entered email doesn't exist in the system!`);
             }
             else {
