@@ -62,8 +62,7 @@ router.post("/login", (req, res)=>{
         .catch((err) => {
             res.render("forms/login", 
             { errmsg: `Sorry, you entered the wrong email and/or password: ${err}` });
-        });
-        
+        });        
     }
 });
 

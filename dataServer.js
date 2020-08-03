@@ -35,7 +35,7 @@ var userSchema = new Schema({
 
 // register User model using the userScehma
 // use the users collection in the db to store documents
-let User = db.model("users", userSchema);;
+let User = db.model("users", userSchema);
 
 module.exports.registerUser = function(registerData) {
     return new Promise(function(resolve, reject) {        
