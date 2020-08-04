@@ -43,18 +43,6 @@ router.get("/mealList", (req, res)=>{
     });
 });
 
-/*
-router.get("/:category", (req, res) => {
-    packageDataService.getPackageByCategory(req.params.category).then((data) => {
-        res.render("packages/mealList", {
-            title: `${req.params.category} Package Page`,
-            packages: data
-        });
-    }).catch((err) => {
-        console.log(`There was an error: ${err}`);
-    });
-}); */
-
 router.get("/mealList/:title", (req, res) => {
     packageDataService.getPackageByTitle(req.params.title).then((data) => {
         if(data) {
